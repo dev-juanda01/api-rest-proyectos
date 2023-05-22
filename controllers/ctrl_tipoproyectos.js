@@ -1,60 +1,69 @@
-const Tipoproyectos = require("../models/modelo_tipoproyecto");
+const TipoProyectos = require("../models/modelo_tipoproyecto");
 
-const readTipoproyectos = async (req, res) => {
+const readTipoProyectos = async (req, res) => {
   try {
-    const tipoproyectos = await Tipoproyectos.find({});
-    //console.log(tipoproectos);
+    const tipoProyectos = await TipoProyectos.find({});
 
-    if (!tipoproyectos)
+    if (tipoProyectos.length == 0)
       return res
         .status(404)
         .send({ msg: "No hay tipos de proyectos registrados" });
 
-    res.status(200).send({ tipoproyectos: tipoproyectos });
+    return res.status(200).send({ tipoProyectos });
   } catch (error) {
     return res.status(500).send({ msg: `Error: ${error}` });
   }
 };
 
-const createTipoproyecto = async (req, res) => {
+const createTipoProyecto = async (req, res) => {
   try {
-    const { nombre, ...body } = req.body;
-    console.log(nombre);
+    let { nombre, ...body } = req.body;
 
     if (!nombre)
       return res.status(400).send({ msg: "No ingresaste el nombre" });
 
-    const tipoproyecto = await Tipoproyectos({ nombre, ...body });
-    tipoproyecto.save();
+    nombre = nombre.toUpperCase();
 
-    res.status(201).send(etapa);
+    const consultarTipo = await TipoProyectos.find({ nombre });
+
+    if (consultarTipo)
+      return res
+        .status(400)
+        .send({ msg: "El tipo ya existe en la base de datos" });
+
+    const tipoProyecto = await TipoProyectos({ nombre, ...body });
+    await tipoProyecto.save();
+
+    return res.status(201).send(tipoProyecto);
   } catch (error) {
     return res.status(500).send({ msg: `Error: ${error}` });
   }
 };
 
-const updateTipoproyecto = async (req, res) => {
+const updateTipoProyecto = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, ...body } = req.body;
+    let { nombre, ...body } = req.body;
 
-    const tipoproyectoActualizado = await Tipoproyectos.findByIdAndUpdate(
+    nombre = nombre.toUpperCase();
+
+    const tipoProyectoActualizado = await TipoProyectos.findByIdAndUpdate(
       id,
       { nombre, ...body },
       { new: true }
     );
 
-    if (!tipoproyectoActualizado)
+    if (!tipoProyectoActualizado)
       return res.status(404).send({ msg: "El tipo de proyecto no existe" });
 
-    return res.status(200).send(tipoproyectoActualizado);
+    return res.status(200).send(tipoProyectoActualizado);
   } catch (error) {
     return res.status(500).send({ msg: `Error: ${error}` });
   }
 };
 
 module.exports = {
-  createTipoproyecto,
-  readTipoproyectos,
-  updateTipoproyecto,
+  createTipoProyecto,
+  readTipoProyectos,
+  updateTipoProyecto,
 };

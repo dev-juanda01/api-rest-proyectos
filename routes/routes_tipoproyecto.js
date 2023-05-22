@@ -1,15 +1,15 @@
 const {
-  createTipoproyecto,
-  readTipoproyectos,
-  updateTipoproyecto,
+  createTipoProyecto,
+  readTipoProyectos,
+  updateTipoProyecto,
 } = require("../controllers/ctrl_tipoproyectos");
 
 const { Router } = require("express"),
   routes = Router();
 
 routes
-  .get("/", readTipoproyectos)
-  .post("/", createTipoproyecto)
-  .put("/:id", updateTipoproyecto);
+  .get("/", readTipoProyectos)
+  .post("/", createTipoProyecto)
+  .put("/:id", updateTipoProyecto);
 
 module.exports = routes;

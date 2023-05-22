@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  api-rest-proyectos:
+    container_name: api-rest-proyectos
+    image: api-rest-proyectos:v1
+    build:
+      context: .
+    ports:
+      - "3001:3001"
+    networks:
+      - api-rest-proyectos
+networks:
+  api-rest-proyectos:

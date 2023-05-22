@@ -6,7 +6,7 @@ const TipoProyectos = Schema({
     required: [true, "El nombre es obligatorio"],
     enum: [
       "ENSAYO",
-      "ARTICULO",
+      "ARTÍCULO",
       "MONOGRAFIA",
       "TRABAJO FINAL DE GRADO",
       "TRABAJO FINAL DE ESPECIALIZACION",

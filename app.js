@@ -1,6 +1,7 @@
 const routesEtapas = require("./routes/routes_etapas"),
   routesUniversidad = require("./routes/routes_universidad"),
-  routesTipoproyecto = require("./routes/routes_tipoproyecto");
+  routesTipoproyecto = require("./routes/routes_tipoproyecto"),
+  routesCliente = require("./routes/routes_clientes");
 
 const express = require("express"),
   morgan = require("morgan"),
@@ -28,6 +29,7 @@ app
 app
   .use("/api/etapas", routesEtapas)
   .use("/api/universidad", routesUniversidad)
-  .use("/api/tipoproyecto", routesTipoproyecto);
+  .use("/api/tipoproyectos", routesTipoproyecto)
+  .use("/api/clientes", routesCliente);
 
 module.exports = app;
